@@ -90,4 +90,25 @@ public class menuController {
     }
 
 
+    @FXML
+    void changeToAddStudents(ActionEvent event) {
+    	
+    	Parent mainWindow;
+    	
+    	show_alumns = Main.principal;
+    	
+		try {
+			
+			mainWindow = FXMLLoader.load(getClass().getResource("addStudents.fxml"));
+			Scene scene = new Scene(mainWindow);
+	        show_alumns.setScene(scene);
+	        show_alumns.show();
+	        
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	
+
 }

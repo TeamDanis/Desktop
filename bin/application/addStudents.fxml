@@ -7,27 +7,81 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.cursosController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.addStudentsController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0">
          <children>
             <ScrollPane layoutX="139.0" layoutY="39.0" prefHeight="468.0" prefWidth="623.0">
                <content>
-                  <TableView fx:id="tableid" prefHeight="383.0" prefWidth="618.0">
+                  <TableView fx:id="tableid" prefHeight="466.0" prefWidth="620.0">
                     <columns>
-                      	<TableColumn fx:id="codigoCicloId" prefWidth="93.0" text="Degree code" />
-                      	<TableColumn fx:id="nombreCicloId" prefWidth="98.0" text="Degree name" />
-                        <TableColumn fx:id="adaptationCurrId" prefWidth="101.0" text="Adaptation nsq" />
-                        <TableColumn fx:id="horasTotalId" prefWidth="108.0" text="Total hours" />
-                        <TableColumn fx:id="startDateId" prefWidth="94.0" text="Start date" />
-                        <TableColumn fx:id="finalDateId" prefWidth="90.0" text="Final date" />
+                      	<TableColumn fx:id="idConvocatoria" prefWidth="93.0" text="Convocatoria" />
+                      	<TableColumn fx:id="idCodiSolicitud" prefWidth="98.0" text="Codi Solicitud" />
+                        <TableColumn fx:id="idTipusSolicitud" prefWidth="101.0" text="Tipus Solicitud" />
+                        <TableColumn fx:id="idEstatSolicitud" prefWidth="108.0" text="Estat Solicitud" />
+                        <TableColumn fx:id="idNom" prefWidth="94.0" text="Nom" />
+                        <TableColumn fx:id="idPrimerCognom" prefWidth="90.0" text="Primer Cognom" />
+                        <TableColumn fx:id="idSegonCognom" prefWidth="90.0" text="Segon Cognom" />
+                        <TableColumn fx:id="idRalc" prefWidth="90.0" text="ID RALC" />
+                        <TableColumn fx:id="idTipusAlumne" prefWidth="90.0" text="Tipus Alumne" />
+                        <TableColumn fx:id="idCodiCentre" prefWidth="90.0" text="Codi Centre" />
+                        <TableColumn fx:id="idNomCentre" prefWidth="90.0" text="Nom Centre" />
+                        <TableColumn fx:id="idNaturalesaCentre" prefWidth="90.0" text="Naturalesa Centre" />
+                        <TableColumn fx:id="idMunicipiCentre" prefWidth="90.0" text="Municipi Centre" />
+                        <TableColumn fx:id="idSSTTCentre" prefWidth="90.0" text="SSTT Centre" />
+                        <TableColumn fx:id="idCodiEnsenyament" prefWidth="90.0" text="Codi Ensenyament" />
+                        <TableColumn fx:id="idNomEnsenyament" prefWidth="90.0" text="Nom Ensenyament" />
+                        <TableColumn fx:id="idCodiModalitat" prefWidth="90.0" text="Codi Modalitat" />
+                        <TableColumn fx:id="idModalitat" prefWidth="90.0" text="Modalitat" />
+                        <TableColumn fx:id="idCurs" prefWidth="90.0" text="Curs" />
+                        <TableColumn fx:id="idRegim" prefWidth="90.0" text="Regim" />
+                        <TableColumn fx:id="idTorn" prefWidth="90.0" text="Torn" />
+                        <TableColumn fx:id="idDni" prefWidth="90.0" text="DNI" />
+                        <TableColumn fx:id="idNie" prefWidth="90.0" text="NIE" />
+                        <TableColumn fx:id="idPass" prefWidth="90.0" text="Pass" />
+                        <TableColumn fx:id="idTis" prefWidth="90.0" text="Tis" />
+                        <TableColumn fx:id="idDataNaixement" prefWidth="90.0" text="Data Naixement" />
+                        <TableColumn fx:id="idSexe" prefWidth="90.0" text="Sexe" />
+                        <TableColumn fx:id="idNacionalitat" prefWidth="90.0" text="Nacionalitat" />
+                        <TableColumn fx:id="idPaisNaixement" prefWidth="90.0" text="Pais Naixement" />
+                        <TableColumn fx:id="idMunicipiNaixement" prefWidth="90.0" text="Municipi Naixement" />
+                        <TableColumn fx:id="idTipusVia" prefWidth="90.0" text="Tipus Via" />
+                        <TableColumn fx:id="idNomVia" prefWidth="90.0" text="Nom Via" />
+                        <TableColumn fx:id="idNumeroVia" prefWidth="90.0" text="Numero Via" />
+                        <TableColumn fx:id="idAltresDades" prefWidth="90.0" text="Altres Dades" />
+                        <TableColumn fx:id="idProvinciaResidencia" prefWidth="90.0" text="Provincia Residencia" />
+                        <TableColumn fx:id="idMunicipiResidencia" prefWidth="90.0" text="Municipi Residencia" />
+                        <TableColumn fx:id="idLocalitatResidencia" prefWidth="90.0" text="Localitat Residencia" />
+                        <TableColumn fx:id="idCp" prefWidth="90.0" text="CP" />
+                        <TableColumn fx:id="idPaisResidencia" prefWidth="90.0" text="Pais Residencia" />
+                        <TableColumn fx:id="idTelefon" prefWidth="90.0" text="Telefon" />
+                        <TableColumn fx:id="idCorreuElectronic" prefWidth="90.0" text="Correu Electronic" />
+                        <TableColumn fx:id="idTipusDocTutor" prefWidth="90.0" text="Tipus Doc Tutor" />
+                        <TableColumn fx:id="idNumDocTutor" prefWidth="90.0" text="Num Doc Tutor" />
+                        <TableColumn fx:id="idNomTutor" prefWidth="90.0" text="Nom Tutor" />
+                        <TableColumn fx:id="idPrimerCognomTutor" prefWidth="90.0" text="Primer Cognom Tutor" />
+                        <TableColumn fx:id="idSegonCognomTutor" prefWidth="90.0" text="Segon Cognom Tutor" />
+                        <TableColumn fx:id="idTipusDocTutor2" prefWidth="90.0" text="Tipus Doc Tutor 2" />
+                        <TableColumn fx:id="idNumDocTutor2" prefWidth="90.0" text="Num Doc Tutor 2" />
+                        <TableColumn fx:id="idNomTutor2" prefWidth="90.0" text="Nom Tutor 2" />
+                        <TableColumn fx:id="idPrimerCognomTutor2" prefWidth="90.0" text="Primer Cognom Tutor 2" />
+                        <TableColumn fx:id="idSegonCognomTutor2" prefWidth="90.0" text="Segon Cognom Tutor 2" />
+                        <TableColumn fx:id="idCodiCentreProc" prefWidth="90.0" text="Codi Centre Proc" />
+                        <TableColumn fx:id="idNomCentreProc" prefWidth="90.0" text="Nom Centre Proc" />
+                        <TableColumn fx:id="idCodiEnsenyamentProc" prefWidth="90.0" text="Codi Ensenyament Proc" />
+                        <TableColumn fx:id="idNomEnsenyamentProc" prefWidth="90.0" text="Nom Ensenyament Proc" />
+                        <TableColumn fx:id="idCursProc" prefWidth="90.0" text="Curs Proc" />
+                        <TableColumn fx:id="idLlenguaEnten" prefWidth="90.0" text="Llengua Enten" />
+                        <TableColumn fx:id="idReligio" prefWidth="90.0" text="Religio" />
+                        <TableColumn fx:id="idCentreAssignat" prefWidth="90.0" text="Centre Assignat" />
                     </columns>
                   </TableView>
                </content>
             </ScrollPane>
 
             <Button fx:id="btn_imp_cursos" layoutX="139.0" layoutY="529.0" mnemonicParsing="false" onAction="#searchFile" prefHeight="25.0" prefWidth="235.0" text="Seleccionar CSV" />
-            <Button fx:id="testeito" layoutX="527.0" layoutY="529.0" mnemonicParsing="false" onAction="#addCycles" prefHeight="25.0" prefWidth="235.0" text="Afegir cicle" />
+            <Button fx:id="btn_menu" layoutY="1.0" mnemonicParsing="false" onAction="#backToMenu" text="Menú" />
+            <Button fx:id="btn_addStudents" layoutX="527.0" layoutY="529.0" mnemonicParsing="false" onAction="#addStudents" prefHeight="25.0" prefWidth="235.0" text="Añadir alumnos" />
          </children></Pane>
    </children>
 </AnchorPane>

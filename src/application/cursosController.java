@@ -31,7 +31,6 @@ import javafx.stage.Stage;
 
 public class cursosController {
 
-	private String url = "https://team-danis-api.herokuapp.com";
 	
     @FXML
     private Button btn_imp_cursos;
@@ -41,7 +40,6 @@ public class cursosController {
     
     @FXML
     private Button testeito;
-    
     
     @FXML
     private TableView<Degree> tableid;
@@ -65,6 +63,7 @@ public class cursosController {
     private TableColumn<Degree, String> finalDateId;
     
 	static Stage alumnStage;
+	static Stage mainMenu;
 	
 	ArrayList<Degree> degrees = new ArrayList<>();
 
@@ -95,10 +94,8 @@ public class cursosController {
     	FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Buscar Archivo Cursos");
 
-		// Agregar filtros para facilitar la busqueda
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
 
-		// Obtener la imagen seleccionada
 		File file = fileChooser.showOpenDialog(null);	
 		
 		ArrayList<String[]> lines = new ArrayList<>();
@@ -112,24 +109,20 @@ public class cursosController {
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("No se ha seleccionado ningun archivo o bien el archivo seleccionado no tiene un formato correcto.");
-		} catch (NullPointerException e) {
-			System.out.println("No se ha seleccionado ningun archivo.");
+			System.out.println("El formato del archivo es incorrecto");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 		}
 		
+		System.out.println(" lines.size(): "+ lines.size());
+		
 		int c = -1;
 		int m = -1;
 		
-		System.out.println(" lines.size(): "+ lines.size());
-		
 		for (int i = 0; i < lines.size() - 1; i++) {
-			// Si no se repite el ciclo agregarlo.
 			System.out.println("indice: "+i);
 			if (!lines.get(i)[0].equals(lines.get(i + 1)[0])) {
 				m = -1;
-				// Agregar el ciclo y su modulo
 				if (i == 0) {
 					c += 1;
 					m += 1;
@@ -146,7 +139,6 @@ public class cursosController {
 					degrees.get(c).getModuleList().get(m).getUnitList().add(new Unit(lines.get(i)[12], lines.get(i)[13], lines.get(i)[14], lines.get(i)[15], lines.get(i)[16], lines.get(i)[17], lines.get(i)[18]));
 				}
 			} else {
-				// En caso de que se repita el nombre del ciclo anterior agregar el modulo a la lista de modulos del ciclo actual
 				if (degrees.size() > 0) {
 					if (!degrees.get(c).getModuleList().get(m).getCode().equals(lines.get(i)[6])) {
 						degrees.get(c).getModuleList().add(new Module(lines.get(i)[6], lines.get(i)[7], lines.get(i)[8], lines.get(i)[9], lines.get(i)[10], lines.get(i)[11], new ArrayList<>()));
@@ -160,8 +152,6 @@ public class cursosController {
 			}
 		}
 		
-		System.out.println(degrees.get(0).toString());
-        System.out.println(degrees.get(1).toString());
 
         codigoCicloId.setCellValueFactory(new PropertyValueFactory<>("code_degree"));
         nombreCicloId.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -177,11 +167,9 @@ public class cursosController {
     }
     
     @FXML
-    private void addCycles(ActionEvent event) {
-        System.out.println("Inserting data...");
-        URL obj;
+    private void addDegrees(ActionEvent event) {
         try {
-            obj = new URL(url + "/api/importDegrees");
+        	URL obj = new URL("https://team-danis-api.herokuapp.com/api/importDegrees");
 
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
             con.setRequestProperty("Content-Type", "application/json");
@@ -191,8 +179,7 @@ public class cursosController {
             os.write(tableid.getSelectionModel().getSelectedItems().toString().replaceAll("'", "").getBytes("UTF-8"));
             os.close();
 
-            System.out.println("testeito 1: ");
-            System.out.println(tableid.getSelectionModel().getSelectedItems().toString().replaceAll("'", ""));
+            //System.out.println(tableid.getSelectionModel().getSelectedItems().toString().replaceAll("'", ""));
 
             con.getInputStream();
         } catch (MalformedURLException e) {
@@ -200,11 +187,32 @@ public class cursosController {
         } catch (IOException e) {
             System.err.println("Error en la respuesta del servidor." +e);
         }
-
     }
     
     public static void setStage(Stage primaryStage) {
     	alumnStage = primaryStage;
     }
+    
+    @FXML
+    void backToMenu(ActionEvent event) {
+
+	   Parent mainWindow;
+   	
+	   mainMenu = Main.principal;
+   	
+		try {
+			
+			mainWindow = FXMLLoader.load(getClass().getResource("main_menu.fxml"));
+			Scene scene = new Scene(mainWindow);
+			mainMenu.setScene(scene);
+			mainMenu.show();
+	        
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   
+    }
+    
 
 }

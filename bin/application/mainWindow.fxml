@@ -27,8 +27,8 @@
             </ScrollPane>
 
             <Button fx:id="btn_imp_cursos" layoutX="139.0" layoutY="529.0" mnemonicParsing="false" onAction="#searchFile" prefHeight="25.0" prefWidth="235.0" text="Seleccionar CSV" />
-            <Button fx:id="testeito" layoutX="527.0" layoutY="529.0" mnemonicParsing="false" onAction="#addCycles" prefHeight="25.0" prefWidth="235.0" text="Afegir cicle" />
-            <Button fx:id="btn_imp_cursos1" mnemonicParsing="false" onAction="#searchFile" prefHeight="0.0" prefWidth="73.0" text="Menú" />
+            <Button fx:id="testeito" layoutX="527.0" layoutY="529.0" mnemonicParsing="false" onAction="#addDegrees" prefHeight="25.0" prefWidth="235.0" text="Afegir cicle" />
+            <Button mnemonicParsing="false" onAction="#backToMenu" prefHeight="0.0" prefWidth="73.0" text="Menu" />
          </children></Pane>
    </children>
 </AnchorPane>

@@ -37,6 +37,9 @@ import javafx.stage.Stage;
 public class showAlumnsController implements Initializable{
 	
 	static Stage show_alumns;
+	
+	static Stage mainMenu;
+	
 	private static ArrayList<Degree> degreeArray;	
 	
 	private static ArrayList<Students_data> studentArray;
@@ -68,10 +71,6 @@ public class showAlumnsController implements Initializable{
 
     @FXML
     private Button studensButton;
-	
-	
-    
-    
     
 	@FXML
     void changeToShowAlumns(ActionEvent event) {
@@ -96,7 +95,7 @@ public class showAlumnsController implements Initializable{
 
 
 	@FXML
-    void handleSelectCycleGetStudens(ActionEvent event) {
+    void getStudentsFromDegree(ActionEvent event) {
 		
 		
 		try {
@@ -167,10 +166,8 @@ public class showAlumnsController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
-		System.out.println("Estoy dentro");
     	
 		try {
-			
 			
 			URL obj = new URL("https://team-danis-api.herokuapp.com/api/getAllDegrees");
 			
@@ -183,69 +180,51 @@ public class showAlumnsController implements Initializable{
 				response.append(inputLine);
 			}
 
-			JSONArray listCycles = new JSONArray(response.toString());
 			
-			System.out.println(listCycles.length());
+			JSONArray listDegrees = new JSONArray(response.toString());
+			
+			System.out.println(listDegrees.length());
 			
 			degreeArray = new ArrayList<Degree>();
 			
-			for(int i = 0; i < listCycles.length(); i ++) {
+			for(int i = 0; i < listDegrees.length(); i ++) {
 				
-				JSONObject pipiolo = listCycles.getJSONObject(i);
-				Degree cycleEntity = new Degree();
-				
-				cycleEntity.setName(pipiolo.get("nom_cicle_formatiu").toString());
-				
-				System.out.println(pipiolo.get("nom_cicle_formatiu").toString());
-								
+				JSONObject jo = listDegrees.getJSONObject(i);
+				Degree degree = new Degree();
+				degree.setName(jo.get("nom_cicle_formatiu").toString());
+				System.out.println(jo.get("nom_cicle_formatiu").toString());			
 				ArrayList<Module> moduleList = new ArrayList<Module>();
+				JSONArray listModules = new JSONArray(jo.getJSONArray("moduls").toString());
 				
-				JSONArray listModuls = new JSONArray(pipiolo.getJSONArray("moduls").toString());
-				
-				for(int j = 0; j < listModuls.length(); j ++) {
+				for(int j = 0; j < listModules.length(); j ++) {
 					
-					JSONObject modul = listModuls.getJSONObject(j);
-					
+					JSONObject modul = listModules.getJSONObject(j);
 					Module moduleEntity = new Module();
-					
 					moduleEntity.setName(modul.get("nom_modul").toString());
-					
-					ArrayList<Unit> unitiList = new ArrayList<Unit>();
-					
+					ArrayList<Unit> unitList = new ArrayList<Unit>();
 					JSONArray listUnits = new JSONArray(modul.getJSONArray("unitats").toString());
 					
 					for(int x = 0; x < listUnits.length(); x ++) {
 					
 						JSONObject unit = listUnits.getJSONObject(x);
-						
 						Unit unitEntity = new Unit();
-						
 						unitEntity.setName(unit.get("nom_unitat_formativa").toString());
-						
 						System.out.println("unidad "+i+" "+unit.get("nom_unitat_formativa").toString());
-						
-						unitiList.add(unitEntity);
-						
+						unitList.add(unitEntity);
 					}	
 					
-					moduleEntity.setUnitList(unitiList);
-					
+					moduleEntity.setUnitList(unitList);
 					moduleList.add(moduleEntity);
 					
 				}			
 				
-				cycleEntity.setModuleList(moduleList);
-				
-				degreeArray.add(cycleEntity);
+				degree.setModuleList(moduleList);
+				degreeArray.add(degree);
 				
 			}
 			
-			ObservableList<String> cycleArrayList = FXCollections.observableList(new ArrayList<String>());
-
-			for (Degree aaaa : degreeArray) {
-
-				degreeList.getItems().add(aaaa.getName());
-
+			for (Degree d : degreeArray) {
+				degreeList.getItems().add(d.getName());
 			}
 			
 		} catch (IOException | JSONException e) {
@@ -253,9 +232,27 @@ public class showAlumnsController implements Initializable{
 			e.printStackTrace();
 		}
 		
-		System.out.println("Nos vamos viendo master");
-		
 	}
+	
+	   @FXML
+	    void backToMenu(ActionEvent event) {
 
+		   Parent mainWindow;
+	   	
+		   mainMenu = Main.principal;
+	   	
+			try {
+				
+				mainWindow = FXMLLoader.load(getClass().getResource("main_menu.fxml"));
+				Scene scene = new Scene(mainWindow);
+				mainMenu.setScene(scene);
+				mainMenu.show();
+		        
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		   
+	    }
 
 }

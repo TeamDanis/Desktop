@@ -20,7 +20,8 @@
               </content>
             </ScrollPane>
             <ChoiceBox fx:id="degreeList" layoutX="150.0" layoutY="60.0" prefHeight="25.0" prefWidth="600.0" />
-            <Button layoutX="102.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleSelectDegree" text="Boton del testeito" />
+            <Button layoutX="102.0" layoutY="561.0" mnemonicParsing="false" onAction="#selectDegree" text="Mostrar informacion" />
+            <Button mnemonicParsing="false" onAction="#backToMenu" text="Menu" />
          </children></Pane>
    </children>
 </AnchorPane>

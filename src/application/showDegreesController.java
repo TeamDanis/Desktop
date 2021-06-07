@@ -22,15 +22,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class showDegreesController implements Initializable{
 
+	static Stage mainMenu;
+	
 	private static ArrayList<Degree> degreeArray;
 	
 	@FXML
@@ -47,21 +53,16 @@ public class showDegreesController implements Initializable{
     private Accordion acordionID;
     
     
-    
-    
-    
-
     @FXML
-    void handleSelectDegree(ActionEvent event) {
+    void selectDegree(ActionEvent event) {
 
-    	
     	acordionID.getPanes().clear();
     	
-    	String nameCycleSelected = degreeList.getValue();
+    	String nameDegreeSelected = degreeList.getValue();
     	
-    	if(nameCycleSelected.length() > 0) {
+    	if(nameDegreeSelected.length() > 0) {
     	
-    		Degree degree= getDegrees(nameCycleSelected);
+    		Degree degree= getDegrees(nameDegreeSelected);
     		
     		if(degree != null) {
     			
@@ -71,8 +72,8 @@ public class showDegreesController implements Initializable{
 					
 					AnchorPane anchorPane = new AnchorPane();
 					
-					TitledPane nameModul = new TitledPane();
-					nameModul.setText(module.getName());
+					TitledPane nameModule = new TitledPane();
+					nameModule.setText(module.getName());
 					
 					ListView<String> unitList = new ListView<String>();
 					
@@ -88,10 +89,10 @@ public class showDegreesController implements Initializable{
 				    AnchorPane.setLeftAnchor(unitList, 00.0);
 				    AnchorPane.setRightAnchor(unitList, 00.0);
 				    //Cambiar esto si hay muchos
-				    nameModul.setContent(anchorPane);
+				    nameModule.setContent(anchorPane);
 					anchorPane.getChildren().add(unitList);
 					
-					acordionID.getPanes().add(nameModul);
+					acordionID.getPanes().add(nameModule);
 					
 				}
     			
@@ -106,11 +107,8 @@ public class showDegreesController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
-
-		System.out.println("Estoy dentro");
     	
 		try {
-			
 			
 			URL obj = new URL("https://team-danis-api.herokuapp.com/api/getAllDegrees");
 			
@@ -123,69 +121,51 @@ public class showDegreesController implements Initializable{
 				response.append(inputLine);
 			}
 
-			JSONArray listCycles = new JSONArray(response.toString());
+			JSONArray listDegrees = new JSONArray(response.toString());
 			
-			System.out.println(listCycles.length());
+			System.out.println(listDegrees.length());
 			
 			degreeArray = new ArrayList<Degree>();
 			
-			for(int i = 0; i < listCycles.length(); i ++) {
+			for(int i = 0; i < listDegrees.length(); i ++) {
 				
-				JSONObject pipiolo = listCycles.getJSONObject(i);
-				Degree cycleEntity = new Degree();
-				
-				cycleEntity.setName(pipiolo.get("nom_cicle_formatiu").toString());
-				
-				System.out.println(pipiolo.get("nom_cicle_formatiu").toString());
-								
+				JSONObject jo = listDegrees.getJSONObject(i);
+				Degree degree = new Degree();
+				degree.setName(jo.get("nom_cicle_formatiu").toString());
+				System.out.println(jo.get("nom_cicle_formatiu").toString());		
 				ArrayList<Module> moduleList = new ArrayList<Module>();
+				JSONArray listModules = new JSONArray(jo.getJSONArray("moduls").toString());
 				
-				JSONArray listModuls = new JSONArray(pipiolo.getJSONArray("moduls").toString());
-				
-				for(int j = 0; j < listModuls.length(); j ++) {
+				for(int j = 0; j < listModules.length(); j ++) {
 					
-					JSONObject modul = listModuls.getJSONObject(j);
-					
+					JSONObject modul = listModules.getJSONObject(j);
 					Module moduleEntity = new Module();
-					
 					moduleEntity.setName(modul.get("nom_modul").toString());
-					
-					ArrayList<Unit> unitiList = new ArrayList<Unit>();
-					
+					ArrayList<Unit> unitList = new ArrayList<Unit>();
 					JSONArray listUnits = new JSONArray(modul.getJSONArray("unitats").toString());
 					
 					for(int x = 0; x < listUnits.length(); x ++) {
 					
 						JSONObject unit = listUnits.getJSONObject(x);
-						
 						Unit unitEntity = new Unit();
-						
 						unitEntity.setName(unit.get("nom_unitat_formativa").toString());
-						
-						System.out.println("unidad "+i+" "+unit.get("nom_unitat_formativa").toString());
-						
-						unitiList.add(unitEntity);
+						unitList.add(unitEntity);
 						
 					}	
 					
-					moduleEntity.setUnitList(unitiList);
-					
+					moduleEntity.setUnitList(unitList);
 					moduleList.add(moduleEntity);
 					
 				}			
 				
-				cycleEntity.setModuleList(moduleList);
-				
-				degreeArray.add(cycleEntity);
+				degree.setModuleList(moduleList);
+				degreeArray.add(degree);
 				
 			}
 			
-			ObservableList<String> cycleArrayList = FXCollections.observableList(new ArrayList<String>());
 
-			for (Degree aaaa : degreeArray) {
-
-				degreeList.getItems().add(aaaa.getName());
-
+			for (Degree d : degreeArray) {
+				degreeList.getItems().add(d.getName());
 			}
 			
 			
@@ -195,25 +175,41 @@ public class showDegreesController implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		System.out.println("Nos vamos viendo master");
+
 		
 	}
 	
-	public Degree getDegrees(String cycleName) {
+	public Degree getDegrees(String degreeName) {
 		
 		Degree degree = null;
-		
 		for (Degree d : degreeArray) {
-			
-			if(d.getName().equalsIgnoreCase(cycleName)) {
-				
+			if(d.getName().equalsIgnoreCase(degreeName)) {
 				degree = d;
-				
 			}			
 		}		
 		return degree;		
 	}
+	
+   @FXML
+    void backToMenu(ActionEvent event) {
+
+	   Parent mainWindow;
+   	
+	   mainMenu = Main.principal;
+   	
+		try {
+			
+			mainWindow = FXMLLoader.load(getClass().getResource("main_menu.fxml"));
+			Scene scene = new Scene(mainWindow);
+			mainMenu.setScene(scene);
+			mainMenu.show();
+	        
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   
+    }
 	
 }
 					

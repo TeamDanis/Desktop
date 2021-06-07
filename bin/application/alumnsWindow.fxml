@@ -20,7 +20,7 @@
                       <TableColumn fx:id="idColumnName" prefWidth="107.0" text="Nom" />
                         <TableColumn fx:id="idColumnFirstSurname" prefWidth="160.0" text="Primer Cognom" />
                         <TableColumn fx:id="idColumnSecondSurname" prefWidth="166.0" text="Segon Cognom" />
-                        <TableColumn fx:id="idPhoneNumber" prefWidth="158.0" text="Teléfono" />
+                        <TableColumn fx:id="idPhoneNumber" prefWidth="158.0" text="Telefono" />
                         <TableColumn fx:id="idMail" prefWidth="324.0" text="Correo" />
                     </columns>
                   </TableView>
@@ -29,7 +29,8 @@
          </children>
       </AnchorPane>
       <ChoiceBox fx:id="degreeList" layoutX="267.0" layoutY="115.0" prefHeight="26.0" prefWidth="618.0" />
-      <Button fx:id="studensButton" layoutX="44.0" layoutY="601.0" mnemonicParsing="false" onAction="#handleSelectCycleGetStudens" prefHeight="25.0" prefWidth="150.0" text="Buscar" />
-      <Label layoutX="153.0" layoutY="120.0" text="Cicle a buscar:" />
+      <Button fx:id="studensButton" layoutX="44.0" layoutY="601.0" mnemonicParsing="false" onAction="#getStudentsFromDegree" prefHeight="25.0" prefWidth="150.0" text="Buscar" />
+      <Label layoutX="153.0" layoutY="120.0" text="Ciclo a buscar:" />
+      <Button mnemonicParsing="false" onAction="#backToMenu" text="Menu" />
    </children>
 </AnchorPane>

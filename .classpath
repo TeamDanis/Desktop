@@ -9,5 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
 	<classpathentry kind="lib" path="D:/TestFX/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="D:/TestFX/java-json.jar"/>
+	<classpathentry kind="lib" path="D:/TestFX/gson-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
